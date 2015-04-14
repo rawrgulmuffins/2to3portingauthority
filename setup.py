@@ -9,4 +9,4 @@ setup(
     author='Alex Lord',
     author_email='alexmlord@gmail.com',
     url='https://github.com/rawrgulmuffins/2to3portingauthority-cli',
-    packages=[],)
+    packages=['nose', 'testfixtures'],)

@@ -1,6 +1,9 @@
 """
 This is a stand alone command line program which will deliver a random python
 package which has yet to be ported to python3.
+
+USAGE: python_porting_authority
+    Currently no arguments.
 """
 try:
     import xmlrpclib
@@ -10,6 +13,9 @@ from random import randint
 import logging
 
 def column(matrix, i):
+    """
+    Found at http://stackoverflow.com/questions/903853/how-to-extract-column-from-a-multi-dimentional-array
+    """
     return [row[i] for row in matrix]
 
 def get_xmlrpc_client(logger, pypi_url="https://pypi.python.org/pypi"):
@@ -20,7 +26,7 @@ def get_xmlrpc_client(logger, pypi_url="https://pypi.python.org/pypi"):
     try:
         return xmlrpclib.ServerProxy(pypi_url)
     except xmlrpc.client.ProtocolError:
-        logger.critical("Wasn't able to connect to {}. Giving up.".format(
+        logger.critical("Wasn't able to connect to '{}'. Giving up.".format(
             pypi_url))
 
 def get_python2_package_names(xmlrpc_client):
@@ -36,7 +42,7 @@ def get_python2_package_names(xmlrpc_client):
     return list(all_package_names.difference(python3_package_names))
 
 def main():
-    logger = logging.getLogger("porting_authority")
+    logger = logging.getLogger("python_pa")
     xmlrpc_client = get_xmlrpc_client(logger)
     python2_package_names = get_python2_package_names(xmlrpc_client)
     package_index = randint(0, len(python2_package_names))
