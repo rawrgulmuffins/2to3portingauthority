@@ -12,13 +12,12 @@ import logging
 def column(matrix, i):
     return [row[i] for row in matrix]
 
-def get_xmlrpc_client(logger):
+def get_xmlrpc_client(logger, pypi_url="https://pypi.python.org/pypi"):
     """
     Retrieve a pypi xmlrpc client connection by which you can query package
     information from pypi.
     """
     try:
-        pypi_url = "https://pypi.python.org/pypi"
         return xmlrpclib.ServerProxy(pypi_url)
     except xmlrpc.client.ProtocolError:
         logger.critical("Wasn't able to connect to {}. Giving up.".format(
