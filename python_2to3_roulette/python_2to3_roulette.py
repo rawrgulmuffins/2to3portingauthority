@@ -9,6 +9,8 @@ from random import randint
 import logging
 
 import caniusepython3
+from caniusepython3.dependencies import blocking_dependencies
+from caniusepython3.__main__ import message, pprint_blockers
 
 
 def main():
@@ -18,7 +20,12 @@ def main():
     py2_only_projects = set(py2_projects).difference(set(py3_projects))
     package_index = randint(0, len(py2_only_projects))
     selected_package_name = list(py2_only_projects)[package_index]
-    print(selected_package_name)
+    blockers = blocking_dependencies(
+        [selected_package_name],
+        py3_projects)
+    print("Randomly Selected Package is {}".format(selected_package_name))
+    print(message(blockers))
+    print(pprint_blockers(blockers))
 
 if __name__ == "__main__":
     main()
